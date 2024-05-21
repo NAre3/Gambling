@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initialscale=1.0">
+    <title>Document</title>
+    <script>
+        var game_num,times=1,win;
+        var total = parseInt(10000);
+        var msg="";
+
+        function play()
+        {
+            var howmuch;
+            var game;
+            var input = parseInt(document.getElementById("input").value);
+
+            var money = document.getElementById("selected");
+            var big_small;
+
+            if(isNaN(input) || (input <= 0) || (input >= 10))
+            {
+                window.alert("請重新輸入");
+            }
+            else
+            {
+                game_num = Math.trunc(Math.random() * 10);
+                //產生 1~9 的亂數
+                document.getElementById("content").innerHTML = game_num;
+                for(var i=0;i<money.price.length;i++)
+                {
+                    if(money.price[i].checked){
+                    var price = parseInt(money.price[i].value);
+                    }
+                }
+                big_small = Math.round(Math.random());
+                //如果 big_small==1 則比大,==0 則比小
+                if(big_small == 1)
+                {
+                    game = "大";
+                    if(input > game_num)
+                    {
+                        win = "輸";
+                        total += price;
+                        howmuch = `<span style="color:blue">贏 ${price}</span>`;
+                    }
+                    else
+                    {
+                        win="贏";
+                        total -= price;
+                        howmuch = `<span style="color:red">
+                        輸 ${price}</span>`;
+                    }
+                }
+                else
+                {
+                    game = "小"
+                    if(input < game_num)
+                    {
+                        win="輸";
+                        total += price;
+                        howmuch = `<span style="color:blue">
+                        贏 ${price}</span>`;
+                    }
+                    else
+                    {
+                        win="贏";
+                        total -= price;
+                        howmuch = `<span style="color:red">
+                        輸 ${price}</span>`;
+                    }
+                }
+            }
+            msg += "第"+times+"次遊玩，玩家下注"+price+"，比"+game+"，玩家數字為"+input+"，電腦數字為"+game_num+"，電腦"+win + price+"，玩家剩下"+total + "</br>";
+            document.getElementById("sidebar_left").innerHTML = game;
+            document.getElementById("money_show").innerHTML = total + '&nbsp' + howmuch;
+            times +=1
+            document.getElementById("history").innerHTML = msg;
+            return total,msg,times;
+        }
+    </script>
+</head>
+
+<body>
+    <div id="sitebody">
+    <div id="header">
+        <input type="button" onclick="play()" value="Play!" style="font-size: 30px;">
+        <div id="header_right">
+            目前總金額：
+            <p id="money_show" style="font-size:30px;">10000</p> <!--總金額-->
+        </div>
+    </div>
+    <div id="sidebar_left"></div> <!--顯示比大或小-->
+    <div id="sidebar_right"> <!--選擇投注金額-->
+        選擇投注金額:
+        <form nstyle="font-size: 30px;" id="selected">
+            <input type="radio" id="100" name="price" value="100">
+            <label for="male">100</label><br>
+            <input type="radio" id="500" name="price" value="500">
+            <label for="female">500</label><br>
+            <input type="radio" id="1000" name="price" value="1000">
+            <label for="other">1000</label>
+        </form>
+    </div>
+    <div id="content"></div> <!--電腦數字顯示-->
+        <div id="footer"> <!--輸入數字-->
+            請輸入數字:
+            <input type="text" id="input">
+        </div>
+    </div>
+    <p id="history" style="font-size: 10px;color: #000000;">歷程:</p>
+</body>
+
+<style type="text/css">
+    #sitebody{
+        width:100%;
+        margin: 0 auto;
+        font-size: 13px;
+    }
+    #header{
+        background-color:#FFD4D4;
+        height:100px;
+        text-align:center;
+        line-height:80px;
+    }
+    #header_right{
+        background-color:#4EFEB3;
+        font-size: 30px;
+        width: 600px;
+        height:100px;
+        text-align: left;
+        line-height: 35px;
+        float:right;
+    }
+    #sidebar_left{
+        background-color:#FFECC9;
+        width:120px;
+        height:400px;
+        text-align:center;
+        line-height:400px;
+        font-size: 50px;
+        float:left;
+    }
+    #sidebar_right{
+        background-color:#FFECC9;
+        font-size: 40px;
+        width:300px;
+        height:400px;
+        text-align:center;
+        float:right;
+    }
+    #content{
+        margin-left: 120px;
+        margin-right: 300px;
+        height:400px;
+        background-color:#F2FFF2;
+        text-align:center;
+        line-height:400px;
+        font-size: 80px;
+    }
+    #footer{
+        clear:both;
+        background-color:#FFD4D4;
+        height:80px;
+        text-align:center;
+        line-height:80px;
+        font-size: 20px;
+    }
+</style>
+</html>
